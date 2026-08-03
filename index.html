@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta id="viewportMeta" name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lista de Presentes</title>
+  
+  <!-- Link conectando o seu arquivo de estilos (CSS) -->
+  <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+
+  <div class="banner">
+    <picture>
+      <!-- Se a tela for de computador (mínimo de 900px), usa o desktop -->
+      <source media="(min-width: 900px)" srcset="./imagens/bannerDesktop.svg">
+      <!-- Caso contrário (celular), cai no padrão abaixo -->
+      <img src="./imagens/bannerMobile.svg" alt="Banner Lista de Presentes">
+    </picture>
+  </div>
+
+  <header>
+    <h2>LISTA DE PRESENTES</h2>
+  </header>
+
+  <div class="container">
+    <div class="grid" id="lista">
+      <p style="text-align:center; grid-column: 1 / -1; font-size: 18px;">Carregando lista de presentes...</p>
+    </div>
+  </div>
+
+  <div class="modal" id="modal">
+    <div class="modal-content">
+      <h3 style="font-weight:700;">Reservar presente</h3>
+      <p id="infoItem" style="font-size: 18px; color: #BF2604; font-weight: 600; margin: 0 0 20px 0; text-align: center;"></p>
+
+      <input id="nome" placeholder="Seu nome">
+      <input id="contato" placeholder="Seu WhatsApp">
+
+      <div class="modal-botoes">
+        <button class="btn-confirmar" id="btnConfirmar" onclick="confirmarReserva()">Confirmar</button>
+        <button class="btn-cancelar" onclick="fecharModal()">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="mensagemBox" class="mensagem-box">
+    <div id="mensagemTexto" class="mensagem-conteudo"></div>
+  </div>
+
+  <!-- Link conectando o seu arquivo de lógica (JavaScript) -->
+  <script src="./script.js"></script>
+
+</body>
+</html>
