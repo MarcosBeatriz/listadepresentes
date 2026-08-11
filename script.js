@@ -4,6 +4,7 @@
 const API_URL = "https://script.google.com/macros/s/AKfycbyAwf24lDSzrdRnpxCEXjSKBLESuenWueT7Vv8PYMHVaw6KLog6qJB8jDNNO9ujvEKw/exec"; 
 
 let numeroSelecionado = null;
+let itemPixAtivo = null;
 let listaProdutosOriginal = [];
 
 async function carregarDados() {
@@ -38,9 +39,20 @@ function renderizar(dados) {
       botaoReserva = `<button class="btn-indisponivel" disabled>Indisponível</button>`;
     }
 
-    const botaoLink = item.link 
-      ? `<a class="btn-ver" href="${item.link}" target="_blank">Ver produto</a>` 
-      : "";
+    // Tratamento do Link: Verifica se é URL de loja ou Chave Pix
+    const linkLimpo = item.link ? item.link.toString().trim() : "";
+    const ehUrlHttp = linkLimpo.startsWith("http://") || linkLimpo.startsWith("https://");
+
+    let botaoLink = "";
+    if (linkLimpo !== "") {
+      if (ehUrlHttp) {
+        // Link normal de loja
+        botaoLink = `<a class="btn-ver" href="${linkLimpo}" target="_blank">Ver produto</a>`;
+      } else {
+        // Chave Pix / Código Copia e Cola
+        botaoLink = `<button class="btn-pix" onclick="abrirModalPix(${item.numero})">Ver Pix</button>`;
+      }
+    }
 
     // As imagens dos produtos continuam vindo dinamicamente da planilha
     const imagem = item.imagem 
@@ -63,6 +75,68 @@ function renderizar(dados) {
   });
 }
 
+// =========================================================================
+// 💸 FUNÇÕES DO MODAL PIX
+// =========================================================================
+function abrirModalPix(numero) {
+  const item = listaProdutosOriginal.find(i => i.numero == numero);
+  if (!item) return;
+
+  itemPixAtivo = numero;
+
+  document.getElementById("infoItemPix").innerText = `Nº ${item.numero} - ${item.produto}`;
+  document.getElementById("chavePixInput").value = item.link;
+
+  // Limpa o QR Code anterior e gera um novo
+  const qrContainer = document.getElementById("qrcodeContainer");
+  qrContainer.innerHTML = "";
+  
+  new QRCode(qrContainer, {
+    text: item.link,
+    width: 170,
+    height: 170
+  });
+
+  const viewport = document.getElementById("viewportMeta");
+  if (viewport) {
+    viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
+  }
+
+  document.getElementById("modalPix").classList.add("mostrar");
+  window.scrollTo(0, 0);
+}
+
+function fecharModalPix() {
+  document.getElementById("modalPix").classList.remove("mostrar");
+  const viewport = document.getElementById("viewportMeta");
+  if (viewport) {
+    viewport.setAttribute('content', 'width=device-width, initial-scale=1.0');
+  }
+}
+
+function copiarChavePix() {
+  const inputChave = document.getElementById("chavePixInput");
+  
+  navigator.clipboard.writeText(inputChave.value).then(() => {
+    mostrarMensagem("Chave Pix copiada!");
+  }).catch(() => {
+    // Fallback para navegadores antigos
+    inputChave.select();
+    document.execCommand("copy");
+    mostrarMensagem("Chave Pix copiada!");
+  });
+}
+
+function prosseguirParaReservaPix() {
+  fecharModalPix();
+  if (itemPixAtivo) {
+    abrirModal(itemPixAtivo);
+  }
+}
+
+// =========================================================================
+// 📝 FUNÇÕES DO MODAL DE RESERVA TRADICIONAL
+// =========================================================================
 function abrirModal(numero) {
   numeroSelecionado = numero;
   
