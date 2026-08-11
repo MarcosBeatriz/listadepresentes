@@ -7,6 +7,9 @@
   
   <!-- Link conectando o seu arquivo de estilos (CSS) -->
   <link rel="stylesheet" href="./style.css">
+
+  <!-- Biblioteca para gerar QR Code na hora sem precisar de imagens salvas -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
 
 <body>
@@ -30,6 +33,7 @@
     </div>
   </div>
 
+  <!-- MODAL DE RESERVA TRADICIONAL -->
   <div class="modal" id="modal">
     <div class="modal-content">
       <h3 style="font-weight:700;">Reservar presente</h3>
@@ -41,6 +45,28 @@
       <div class="modal-botoes">
         <button class="btn-confirmar" id="btnConfirmar" onclick="confirmarReserva()">Confirmar</button>
         <button class="btn-cancelar" onclick="fecharModal()">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL DE PIX (NOVO) -->
+  <div class="modal" id="modalPix">
+    <div class="modal-content" style="align-items: center; text-align: center;">
+      <h3 style="font-weight:700;">Presentear via Pix</h3>
+      <p id="infoItemPix" style="font-size: 18px; color: #BF2604; font-weight: 600; margin: 0 0 15px 0;"></p>
+
+      <div id="qrcodeContainer"></div>
+
+      <p style="font-size: 15px; color: #333; margin: 10px 0 5px 0;">Copie a chave Pix abaixo para pagar no seu banco:</p>
+
+      <div class="pix-copia-box">
+        <input id="chavePixInput" readonly>
+        <button class="btn-copiar" id="btnCopiarPix" onclick="copiarChavePix()">📋 Copiar Chave Pix</button>
+      </div>
+
+      <div class="modal-botoes" style="width: 100%; margin-top: 20px;">
+        <button class="btn-confirmar" onclick="prosseguirParaReservaPix()">Já fiz o Pix / Reservar</button>
+        <button class="btn-cancelar" onclick="fecharModalPix()">Fechar</button>
       </div>
     </div>
   </div>
