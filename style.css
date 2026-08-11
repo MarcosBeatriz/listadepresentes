@@ -143,6 +143,7 @@ header h2 {
 }
 
 .btn-ver,
+.btn-pix,
 .btn-disponivel,
 .btn-reservado,
 .btn-indisponivel {
@@ -162,6 +163,23 @@ header h2 {
   background: #28a745;
   color: white;
   font-weight: 600;
+}
+
+.btn-pix {
+  all: unset;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: var(--btn-height);
+  background: #008069; /* Cor verde temática do Pix */
+  color: white;
+  font-weight: 600;
+  border-radius: var(--botao-radius);
+  font-size: var(--botao-fonte);
+  font-family: 'ElmsSans', sans-serif;
+  box-sizing: border-box;
+  cursor: pointer;
 }
 
 .btn-disponivel {
@@ -309,6 +327,45 @@ header h2 {
 .btn-confirmar { background: #28a745; color: white; font-weight: 600; }
 .btn-confirmar:disabled { background: #80c791; cursor: not-allowed; }
 .btn-cancelar { background: #dc3545; color: white; font-weight: 600; }
+
+/* ===================================================
+   💸 ELEMENTOS EXCLUSIVOS DO PIX
+   =================================================== */
+#qrcodeContainer {
+  padding: 12px;
+  background: #ffffff;
+  border: 2px dashed var(--cor-principal);
+  border-radius: 12px;
+  margin: 10px 0;
+  display: inline-block;
+}
+
+.pix-copia-box {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.pix-copia-box input {
+  text-align: center;
+  font-size: 14px !important;
+  padding: 10px !important;
+  background: #f8f9fa;
+  color: #495057;
+}
+
+.btn-copiar {
+  background: #2B3F2C;
+  color: white;
+  font-weight: 600;
+  height: 48px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-family: 'ElmsSans', sans-serif;
+  cursor: pointer;
+}
 
 /* =========================
    🔔 CAIXA DE MENSAGEM
