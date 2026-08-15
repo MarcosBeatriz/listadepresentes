@@ -55,9 +55,14 @@ function renderizar(dados) {
     }
 
     // As imagens dos produtos continuam vindo dinamicamente da planilha
-    const imagem = item.imagem 
-      ? `<img class="imagem" src="${item.imagem}">` 
-      : `<div class="imagem"></div>`;
+    const imagem = item.imagem
+  ? `
+    <div class="imagem-container">
+      <div class="imagem-fundo" style="background-image: url('${item.imagem}')"></div>
+      <img class="imagem" src="${item.imagem}" alt="${item.produto}">
+    </div>
+  `
+  : `<div class="imagem-container"><div class="imagem"></div></div>`;
 
     container.innerHTML += `
       <div class="card">
