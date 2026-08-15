@@ -100,18 +100,39 @@ header h2 {
   flex-direction: column;
 }
 
-.imagem {
+.imagem-container {
   width: 100%;
   aspect-ratio: var(--imagem-proporcao);
-  object-fit: cover;
+  position: relative;
+  overflow: hidden;
   background: #eee;
+}
+
+.imagem-fundo {
+  position: absolute;
+  inset: -20px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: blur(15px);
+  transform: scale(1.1);
+  opacity: 0.65;
+}
+
+.imagem {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  display: block;
 }
 
 .conteudo {
   padding: 10px;
   display: flex;
   flex-direction: column;
-  height: 100%;
   box-sizing: border-box;
 }
 
@@ -125,11 +146,14 @@ header h2 {
   font-size: var(--produto-fonte);
   font-weight: 600;
   margin: 6px 0;
+
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  flex-grow: 1;
+
+  line-height: 1.2;
+  min-height: calc(2 * 1.2em);
 }
 
 /* =========================
